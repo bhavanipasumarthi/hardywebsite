@@ -1,5 +1,5 @@
 // Function to add a new wish
-function addWish(event) {
+async function addWish(event) {
   event.preventDefault(); // Prevent form submission refresh
 
   // Get input values
@@ -11,30 +11,36 @@ function addWish(event) {
     return;
   }
 
-  // Save the wish to localStorage
+  // Save the wish to the server (this part is optional)
+  try {
+    await fetch("/api/wishes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, message }),
+    });
+  } catch (error) {
+    console.error("Error saving wish to the server:", error);
+  }
+
+  // Save the wish to localStorage as a backup
   saveWishToStorage(name, message);
+
+  // Refresh the wish wall by reloading all wishes from localStorage
+  await fetchWishes();
 
   // Clear input fields
   document.getElementById("name").value = "";
   document.getElementById("message").value = "";
-
-  // Refresh the wish wall by reloading all wishes
-  loadWishesFromStorage();
 }
 
-// Function to save the wish to localStorage
-function saveWishToStorage(name, message) {
-  const wishes = JSON.parse(localStorage.getItem("wishes")) || [];
-  wishes.push({ name, message });
-  localStorage.setItem("wishes", JSON.stringify(wishes));
-}
-
-// Function to load all wishes from localStorage
-function loadWishesFromStorage() {
+// Function to fetch and load all wishes from localStorage (instead of server)
+async function fetchWishes() {
   const wishWall = document.getElementById("wishWall");
-  wishWall.innerHTML = ""; // Clear the wall before loading wishes
+  wishWall.innerHTML = ""; // Clear the wall
 
+  // Load wishes from localStorage
   const wishes = JSON.parse(localStorage.getItem("wishes")) || [];
+
   wishes.forEach((wish) => {
     const newNote = document.createElement("div");
     newNote.classList.add("sticky-note");
@@ -43,9 +49,17 @@ function loadWishesFromStorage() {
       <strong>${wish.name}</strong><br>${wish.message}
       <button class="delete-btn" onclick="deleteWishFromStorage('${wish.name}', '${wish.message}')">❌</button>
     `;
+    
     // Append the sticky note to the wish wall
     wishWall.appendChild(newNote);
   });
+}
+
+// Function to save the wish to localStorage
+function saveWishToStorage(name, message) {
+  const wishes = JSON.parse(localStorage.getItem("wishes")) || [];
+  wishes.push({ name, message });
+  localStorage.setItem("wishes", JSON.stringify(wishes));
 }
 
 // Function to remove a wish from localStorage
@@ -57,15 +71,12 @@ function deleteWishFromStorage(name, message) {
   localStorage.setItem("wishes", JSON.stringify(updatedWishes));
 
   // Refresh the wish wall after deletion
-  loadWishesFromStorage();
+  fetchWishes();
 }
 
 // Load wishes when the page is loaded
-window.onload = loadWishesFromStorage;
+window.onload = fetchWishes;
 
 // Attach the function to the form submission event
 const wishForm = document.getElementById("wishForm");
 wishForm.addEventListener("submit", addWish);
-
-
-
