@@ -1,6 +1,5 @@
 // Firebase configuration
 const firebaseConfig = {
-  const firebaseConfig = {
   apiKey: "AIzaSyAqMZSidK10D7_fUit1uzDk1tkg60KS6js",
   authDomain: "hardywebsite-22e1a.firebaseapp.com",
   projectId: "hardywebsite-22e1a",
