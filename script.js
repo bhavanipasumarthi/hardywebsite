@@ -14,12 +14,12 @@ function addWish(event) {
   // Save the wish to localStorage
   saveWishToStorage(name, message);
 
-  // Refresh the wish wall by reloading all wishes
-  loadWishesFromStorage();
-
   // Clear input fields
   document.getElementById("name").value = "";
   document.getElementById("message").value = "";
+
+  // Refresh the wish wall by reloading all wishes
+  loadWishesFromStorage();
 }
 
 // Function to save the wish to localStorage
@@ -66,5 +66,6 @@ window.onload = loadWishesFromStorage;
 // Attach the function to the form submission event
 const wishForm = document.getElementById("wishForm");
 wishForm.addEventListener("submit", addWish);
+
 
 
