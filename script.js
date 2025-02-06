@@ -32,7 +32,7 @@ function saveWishToStorage(name, message) {
 // Function to load all wishes from localStorage
 function loadWishesFromStorage() {
   const wishWall = document.getElementById("wishWall");
-  wishWall.innerHTML = ""; // Clear the wall
+  wishWall.innerHTML = ""; // Clear the wall before loading wishes
 
   const wishes = JSON.parse(localStorage.getItem("wishes")) || [];
   wishes.forEach((wish) => {
@@ -66,4 +66,5 @@ window.onload = loadWishesFromStorage;
 // Attach the function to the form submission event
 const wishForm = document.getElementById("wishForm");
 wishForm.addEventListener("submit", addWish);
+
 
