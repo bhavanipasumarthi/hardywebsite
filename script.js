@@ -104,13 +104,6 @@ function loadWishesFromStorage() {
       <button class="delete-btn">❌</button>
     `;
 
-    // Add delete functionality
-    const deleteButton = newNote.querySelector(".delete-btn");
-    deleteButton.addEventListener("click", () => {
-      wishWall.removeChild(newNote); // Remove the sticky note from the page
-      deleteWishFromStorage(wish.name, wish.message); // Remove the wish from localStorage
-    });
-
     // Append the sticky note to the wish wall
     wishWall.appendChild(newNote);
   });
