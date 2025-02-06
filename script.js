@@ -51,14 +51,6 @@ async function fetchWishes() {
   
       `;
 
-      // Add delete functionality
-      //const deleteButton = newNote.querySelector(".delete-btn");
-      //deleteButton.addEventListener("click", async () => {
-      //wishWall.removeChild(newNote); // Remove the sticky note
-      //await deleteWishFromServer(wish.name, wish.message); // Remove the wish from the server
-      //deleteWishFromStorage(wish.name, wish.message); // Remove the wish from localStorage
-      //});
-
       // Append the sticky note to the wish wall
       wishWall.appendChild(newNote);
     });
