@@ -45,9 +45,19 @@ async function fetchWishes() {
     wishes.forEach((wish) => {
       const newNote = document.createElement("div");
       newNote.classList.add("sticky-note");
-      newNote.style.setProperty("--rotation", ${Math.random() * 10 - 5}deg);
-      newNote.innerHTML = 
+      newNote.style.setProperty("--rotation", `${Math.random() * 10 - 5}deg`);
+      newNote.innerHTML = `
        <strong>${wish.name}</strong><br>${wish.message}
+  
+      `;
+
+      // Add delete functionality
+      //const deleteButton = newNote.querySelector(".delete-btn");
+      //deleteButton.addEventListener("click", async () => {
+      //wishWall.removeChild(newNote); // Remove the sticky note
+      //await deleteWishFromServer(wish.name, wish.message); // Remove the wish from the server
+      //deleteWishFromStorage(wish.name, wish.message); // Remove the wish from localStorage
+      //});
 
       // Append the sticky note to the wish wall
       wishWall.appendChild(newNote);
@@ -96,11 +106,18 @@ function loadWishesFromStorage() {
   wishes.forEach((wish) => {
     const newNote = document.createElement("div");
     newNote.classList.add("sticky-note");
-    newNote.style.setProperty("--rotation", ${Math.random() * 10 - 5}deg);
-    newNote.innerHTML = 
+    newNote.style.setProperty("--rotation", `${Math.random() * 10 - 5}deg`);
+    newNote.innerHTML = `
       <strong>${wish.name}</strong><br>${wish.message}
       <button class="delete-btn">❌</button>
-    ;
+    `;
+
+    // Add delete functionality
+    const deleteButton = newNote.querySelector(".delete-btn");
+    deleteButton.addEventListener("click", () => {
+      wishWall.removeChild(newNote); // Remove the sticky note from the page
+      deleteWishFromStorage(wish.name, wish.message); // Remove the wish from localStorage
+    });
 
     // Append the sticky note to the wish wall
     wishWall.appendChild(newNote);
@@ -113,3 +130,4 @@ window.onload = fetchWishes;
 // Attach the function to the form submission event
 const wishForm = document.getElementById("wishForm");
 wishForm.addEventListener("submit", addWish);
+
