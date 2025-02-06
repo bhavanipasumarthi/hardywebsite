@@ -48,8 +48,6 @@ async function fetchWishes() {
       newNote.style.setProperty("--rotation", `${Math.random() * 10 - 5}deg`);
       newNote.innerHTML = `
        <strong>${wish.name}</strong><br>${wish.message}
-  
-      `;
 
       // Append the sticky note to the wish wall
       wishWall.appendChild(newNote);
